@@ -1,4 +1,4 @@
 out/
 __*
 .*
-!.gitignore
+!.git*

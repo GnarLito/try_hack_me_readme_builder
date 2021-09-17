@@ -1,0 +1,3 @@
+[submodule "thm_api"]
+ path = thm_api
+ url = https://github.com/GnarLito/thm-api-py.git
