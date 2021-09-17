@@ -9,10 +9,13 @@ from html_to_text import *
 
 def main(room, out_file=None, creds=None):
   thm = THM()
-  thm.login(creds)
-  if creds.__len__() > 1:
+
+  print(creds.__len__())
+
+  if creds.__len__() > 0:
+    thm.login(creds)
     pass
-  print(thm.session.cookies)
+  
   room_data = thm.room_tasks(room)
   
   if room_data.__len__() < 1:
@@ -84,13 +87,13 @@ if __name__ == "__main__":
     print("Output file needs be supplied\nsee '-h'")
     exit(1)
   
-  if   cred.__len__() > 1 and "session"  not in cred and "username" not in cred:
+  if   cred.__len__() > 0 and "session"  not in cred and "username" not in cred:
     print("Missing the Username.\nsee '-h'")
     exit(1)
-  elif cred.__len__() > 1 and "session"  not in cred and "password" not in cred:
+  elif cred.__len__() > 0 and "session"  not in cred and "password" not in cred:
     print("Missing the Password.\nsee '-h'")
     exit(1)
-  elif cred.__len__() > 1 and "username" not in cred and "session"  not in cred:
+  elif cred.__len__() > 0 and "username" not in cred and "session"  not in cred:
     print("missing the Session.\nsee '-h'")
     exit(1)
   
