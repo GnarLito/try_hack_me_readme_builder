@@ -3,35 +3,29 @@
 import requests
 import json
 import sys, getopt
+from thmapi import THM
 from html_to_text import *
 
-endpoint = "https://tryhackme.com"
 
-def Get_room(room, cookie=None):
-
-  r = requests.get(f"{endpoint}/api/tasks/{room}", cookies=cookie)
-  if r.status_code != 200:
-    print(f"{endpoint}/api/tasks/{room}\nGave status: {r.status_code}\nShuting down")
-    return 1
-
-  json_data = json.loads(r.text)
-
-  if json_data['totalTasks'] < 1:
-    print(f"No tasks found in room {room}")
-    return 1
-
-  for i in json_data['data']:
-    i['taskDesc'] = deHTML(i['taskDesc'], '__')
-    i['taskTitle'] = deHTML(i['taskTitle'], '__')
-    for j in i['questions']:
-      j['question'] = deHTML(j['question'])
-
-  return json_data
+def main(room, out_file=None, creds=None):
+  thm = THM()
+  thm.login(creds)
+  if creds.__len__() > 1:
+    pass
+  print(thm.session.cookies)
+  room_data = thm.room_tasks(room)
+  
+  if room_data.__len__() < 1:
+    print(f"Room: {room} is empty")
+    return 1;
+  
+  room_data = format_data(room_data)
+  Write_tasks(room, room_data, out_file)
 
 
 def Write_tasks(name, room_data, out_file):
   out_string = "# "+ name;
-  for task in room_data['data']:
+  for task in room_data:
     # add TASK
     out_string += f"# {task['taskTitle']}\n"
     for quest in task['questions']:
@@ -55,23 +49,30 @@ def Write_tasks(name, room_data, out_file):
     out.write(out_string)
   print(f"file write done | in: {out_file}")
 
+
+
 if __name__ == "__main__":
   room = None
   out_file = None
-  cookie = None
+  cred = {};
   try:
-    opts, args = getopt.getopt(sys.argv[1:],"hr:o:c:",["ofile=","room=", "cookie="])
+    opts, args = getopt.getopt(sys.argv[1:],"hr:o:u:p:s:",["help","ofile=","room=", "username=", "password=", "session="])
     for opt, arg in opts:
-      if opt == '-h':
+      if opt in ("-h", "--help"):
         print(f"{sys.argv[0]} -r <room> -o <outFile> [-c <cookie: connect.sid>]")
         exit(0)
       elif opt in ("-r", "--room"):
         room = arg
       elif opt in ("-o", "--ofile"):
         out_file = arg
-      elif opt in ("-c","--cookie"):
-        cookie = json.loads('{"connect.sid": "'+arg+'"}')
-
+      elif opt in ("-u","--username"):
+        cred.update({"username": arg})
+      elif opt in ("-p","--passowrd"):
+            cred.update({"password": arg})
+      elif opt in ("-s","--session"):
+        cred.update({"session": arg})
+      
+  
   except getopt.GetoptError:
     print(f"{sys.argv[0]} -r <room> -o <outFile> [-c <cookie: connect.sid>]")
     sys.exit(2)
@@ -82,9 +83,15 @@ if __name__ == "__main__":
   if out_file is None:
     print("Output file needs be supplied\nsee '-h'")
     exit(1)
-  # get Task to readme.md file
-  task_list = Get_room(room, cookie)
-  if task_list == 1:
+  
+  if   cred.__len__() > 1 and "session"  not in cred and "username" not in cred:
+    print("Missing the Username.\nsee '-h'")
     exit(1)
-  else:
-    Write_tasks(room, task_list, out_file)
+  elif cred.__len__() > 1 and "session"  not in cred and "password" not in cred:
+    print("Missing the Password.\nsee '-h'")
+    exit(1)
+  elif cred.__len__() > 1 and "username" not in cred and "session"  not in cred:
+    print("missing the Session.\nsee '-h'")
+    exit(1)
+  
+  main(room, out_file, cred)
