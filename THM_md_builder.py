@@ -45,7 +45,7 @@ def Write_tasks(name, room_data, out_file, skip_answers):
       out_string += "\n"
 
   if out_file is None:
-    out_file = f"./{name}/README.md"
+    out_file = f"./README.md"
   if out_file.endswith("/") or out_file.endswith("\\"):
     out_file += "README.md"
   elif not out_file.endswith(".md"):
@@ -94,9 +94,6 @@ if __name__ == "__main__":
 
   if room is None:
     print("Room needs be supplied\nsee '-h'")
-    exit(1)
-  if out_file is None:
-    print("Output file needs be supplied\nsee '-h'")
     exit(1)
   
   if   cred.__len__() > 0 and "session"  not in cred and "username" not in cred:

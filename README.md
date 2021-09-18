@@ -6,10 +6,15 @@ Auto create README.md file for Try Hack Me rooms.
 ```
 Usage: THM_md_builder.py 
   -r <room name (from url)> 
-  -o <output file path/name> 
-  [-s <connect-sid cookie> (only needed for auto fill of the README.md) ]
-  [-a (dont auto fill in answers)]
+  [ -o <output file path/name> ]
+  [ -s <connect-sid cookie> (only needed for auto fill of the README.md) ]
+  [ -a (dont auto fill in answers) ]
 ```
+```
+Example: 
+  - THM_md_builder.py -r introduction -o readme.md -s {thm:cookie:connect-sid}
+```
+
 Note:
   The connect.sid cookie from THM is a static cookie which is not session based (as far as i know).
 
