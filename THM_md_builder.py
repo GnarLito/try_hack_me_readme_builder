@@ -50,8 +50,10 @@ def Write_tasks(name, room_data, out_file, skip_answers):
     out_file += "README.md"
   elif not out_file.endswith(".md"):
     out_file += ".md"
-
-  os.makedirs(os.path.dirname(out_file), exist_ok=True)
+    
+  if '/' in out_file or '\\' in out_file:
+    os.makedirs(os.path.dirname(out_file), exist_ok=True)
+   
   with open(f"{out_file}", "w") as out:
     out.write(out_string)
   print(f"Output written to {out_file}")
