@@ -2,7 +2,10 @@
 # THM readme builder
 
 Auto create README.md file for Try Hack Me rooms.
-
+```
+Install:
+  git clone --recurse-submodules https://github.com/GnarLito/try_hack_me_readme_builder.git
+```
 ```
 Usage: THM_md_builder.py 
   -r <room name (from url)> 
