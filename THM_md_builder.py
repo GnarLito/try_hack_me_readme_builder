@@ -32,7 +32,7 @@ def Write_tasks(name, room_data, out_file, skip_answers):
       out_string += f"{quest['questionNo']}. **{quest['question'].strip()}**\n\n"
       out_string += " > "
       # if answer exist write it
-      if not skip_answers and task['tasksInfo'].__len__() > 1 and task['tasksInfo'][int(quest['questionNo'])-1]['correct']:
+      if not skip_answers and task['tasksInfo'].__len__() > 0 and task['tasksInfo'][int(quest['questionNo'])-1]['correct']:
       
         if not task['tasksInfo'][int(quest['questionNo'])-1]['noAnswer']:
           out_string += f"{task['tasksInfo'][int(quest['questionNo'])-1]['submission'].strip()}\n"
