@@ -10,7 +10,7 @@ Install:
 Usage: THM_md_builder.py 
   -r <room name (from url)> 
   [ -o <output file path/name> ]
-  [ -s <connect-sid cookie> (only needed for auto fill of the README.md) ]
+  [ -s <connect-sid cookie> (only needed for auto fill of the answers) ]
   [ -a (dont auto fill in answers) ]
 ```
 ```
