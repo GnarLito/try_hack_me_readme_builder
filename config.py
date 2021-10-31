@@ -12,12 +12,12 @@ template = {
   "question": """
   {questionNo}. **{question}**
   > `{submission} `
-"""
+""",
+  "no_answer": "{answerDesc}",
+  "placeholder": "{answerDesc}",
 }
 
 config = {
-  "no_answer": "{answerDesc}",
-  "placeholder": "{answerDesc}",
   "REPLACE_TAGS": [
     ['&amp;', ''],
     ['&lt;', '<'],

@@ -103,9 +103,9 @@ class room_task:
     if self.authenticated:
       for i in task['questions']:
         if i['noAnswer'] and i['correct']:
-          i['submission'] = self.replace_attr(config.config['no_answer'], r"{(.*?)}", self.get_attr(task=task, question=i))
+          i['submission'] = self.replace_attr(config.template['no_answer'], r"{(.*?)}", self.get_attr(task=task, question=i))
         elif not i['correct']:
-          i['submission'] = self.replace_attr(config.config['placeholder'], r"{(.*?)}", self.get_attr(task=task, question=i))
+          i['submission'] = self.replace_attr(config.template['placeholder'], r"{(.*?)}", self.get_attr(task=task, question=i))
     
     return task['questions']
   

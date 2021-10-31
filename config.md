@@ -42,13 +42,15 @@ submission      = the answer given
 noAnswer        = true if no answer needed for the question
 answerDesc      = placeholder text in answer textarea
 ```
-
+### miscellaneous
+- `no_answer` and `placeholder` can use all template options above, to use them encapsulate the option between `{}`
+```ini
+no_answer       = sets the submission field when `noAnswers` is set
+placeholder     = sets the submission field when `correct` is not set
+```
 ___
 ## CONFIG OPTIONS:
- - `no_answer` and `placeholder` can use all template options above, to use them encapsulate the option between `{}`
 ```ini
-no_answer       = sets the text when `noAnwers` is true
-placeholder     = sets the anwser field to this while not filled
 REPLACE_TAGS    = list set for replacing HTML codes
 HTML_TAGS       = list set for removing HTML tags
 auth_only       = set of options inaccessable when not signed in (session)

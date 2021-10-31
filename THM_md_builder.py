@@ -3,7 +3,6 @@
 import getopt
 import sys
 
-import config
 from room_tasks import room_task
 from thm_api.thmapi import THM
 
