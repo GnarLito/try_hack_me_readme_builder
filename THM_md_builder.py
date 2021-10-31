@@ -32,12 +32,15 @@ def get_THM_room(thm_session, room_name):
       for quest in task['questions']:
         if quest['noAnswer'] and quest['correct']:
           quest['submission'] = config.config['no_answer']
+        elif not quest['correct']:
+          quest['submission'] = quest[config.config['placeholder']]
   
   return room_tasks
 
 def write(room_name, thm_session, room_data, out_file, skip_answers):
   global_data = {
-    "room_name": room_name
+    "room_name": room_name,
+    "authed": str(thm_session.authenticated)
   }
   outdata = config.template['global']
   for global_i in re.findall(r"{(.*?)}",outdata):
@@ -64,7 +67,7 @@ def write(room_name, thm_session, room_data, out_file, skip_answers):
                   print(f"unknown template `{quest_i}` in question. stopping...")
                   exit(1)
                 else:
-                  outQuest = outQuest.replace("{"+quest_i+"}", deHTML(str(question[quest_i])))
+                  outQuest = outQuest.replace("{"+quest_i+"}", deHTML(str(question[quest_i])).strip())
               outTask += outQuest
           
           elif task_i not in task:
@@ -72,7 +75,7 @@ def write(room_name, thm_session, room_data, out_file, skip_answers):
             exit(1)
           
           else:
-            outTask = outTask.replace("{"+task_i+"}", deHTML(str(task[task_i])))
+            outTask = outTask.replace("{"+task_i+"}", deHTML(str(task[task_i]), "_"))
         outdata += outTask
     
     elif global_i not in global_data:
@@ -81,6 +84,7 @@ def write(room_name, thm_session, room_data, out_file, skip_answers):
     
     else:
       outdata = outdata.replace("{"+global_i+"}", str(global_data[global_i]))
+      outdata = object_fill(global_data, global_i, outdata)
   
   
   if out_file is None:
@@ -98,7 +102,7 @@ def write(room_name, thm_session, room_data, out_file, skip_answers):
   print(f"Output written to {out_file}")
 
 def deHTML(in_put, replace=''):
-  in_put = re.sub(r"\n", '', in_put);
+  # in_put = re.sub(r"\n", '', in_put);
   for t in config.config['HTML_TAGS']:
     in_put = re.sub(r"<"+ t +"[^<]*>", replace, in_put);
   for t in config.config['REPLACE_TAGS']:

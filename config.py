@@ -1,34 +1,14 @@
 
-"""
-EXAMPLE:
-### room
-[room](https://www.tryhackme.com/room/room)
 
-
-# 1. task 1
-  1. **question 1**
-  > Not needed.
-  
-  2. **question 2**
-  > my answer
-
-# 2. task 2
-  1. **question 1**
-  > my answer
-  
-  2. **question 2**
-  > my answer
-
-"""
 template = {
   "global": """
-### {room_name}
+# {room_name}
 [Room](https://www.tryhackme.com/room/{room_name})
 {task}
 """,
 
   "task": """
-# {taskNo}. {taskTitle}{question}
+## {taskNo}. {taskTitle}{question}
 """,
 
   "question": """
@@ -38,7 +18,8 @@ template = {
 }
 
 config = {
-  "no_answer": "Non needed.",
+  "no_answer": "None needed.",
+  "placeholder": "answerDesc",
   "REPLACE_TAGS": [
     ['&amp;', ''],
     ['&lt;', '<'],
@@ -56,8 +37,10 @@ config = {
     , 'strong'  , '/strong'
     , 'div'     , '/div'
     , 'tbody'   , '/tbody'
+    , 'thead'   , '/thead'
     , 'table'   , '/table'
     , 'td'      , '/td'
+    , 'th'      , '/th'
     , 'tr'      , '/tr'
     , 'br'      , 'img'
   ],
