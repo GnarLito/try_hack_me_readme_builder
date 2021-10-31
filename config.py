@@ -1,25 +1,23 @@
-
-
 template = {
-  "global": """
+  "room": """
 # {room_name}
 [Room](https://www.tryhackme.com/room/{room_name})
-{task}
+{tasks}
 """,
 
   "task": """
-## {taskNo}. {taskTitle}{question}
+## {taskNo}. {taskTitle}{questions}
 """,
 
   "question": """
   {questionNo}. **{question}**
-  > {submission}
+  > `{submission} `
 """
 }
 
 config = {
-  "no_answer": "None needed.",
-  "placeholder": "answerDesc",
+  "no_answer": "{answerDesc}",
+  "placeholder": "{answerDesc}",
   "REPLACE_TAGS": [
     ['&amp;', ''],
     ['&lt;', '<'],
