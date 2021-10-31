@@ -5,7 +5,7 @@ To use an option encapsulate the option between `{}`
 
 the template options are backwards usable, 
 meaning in the questions template are tasks and global options available to use
-and from the tasks template are the global template options.
+and from the tasks template are the global template options available to use.
 
 More room options will be on the way.
 ## TEMPLATE OPTIONS:
