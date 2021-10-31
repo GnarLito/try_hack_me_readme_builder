@@ -1,64 +1,21 @@
 #!/usr/bin/env python3
 
-import sys, getopt, os
+import getopt
+import sys
+
+from room_tasks import room_task
 from thm_api.thmapi import THM
-from html_to_text import *
 
 
-def main(room, out_file=None, creds=None, skip_answers=False):
-  thm = THM()
+def main(room_name, out_file=None, creds=None, skip_answers=False):
+  thm_session = THM()
 
   if creds.__len__() > 0:
-    thm.login(creds)
+    thm_session.login(creds)
     pass
   
-  room_data = thm.room_tasks(room)
-  
-  if room_data.__len__() < 1:
-    print(f"Room: {room} is empty")
-    return 1;
-  
-  room_data = format_data(room_data)
-  Write_tasks(room, room_data, out_file, skip_answers)
-
-
-def Write_tasks(name, room_data, out_file, skip_answers):
-  out_string = "# "+ name + "\n\n";
-  for task in room_data:
-    # add TASK
-    out_string += f"# {task['taskTitle'].strip()}\n"
-    for quest in task['questions']:
-      # add QUESTIONS
-      out_string += f"{quest['questionNo']}. **{quest['question'].strip()}**\n\n"
-      out_string += " > "
-      # if answer exist write it
-      if not skip_answers and task['tasksInfo'].__len__() > 0 and task['tasksInfo'][int(quest['questionNo'])-1]['correct']:
-      
-        if not task['tasksInfo'][int(quest['questionNo'])-1]['noAnswer']:
-          out_string += f"{task['tasksInfo'][int(quest['questionNo'])-1]['submission'].strip()}\n"
-        else: 
-          out_string += "None needed.\n"
-      
-      else:
-        out_string += "\n"
-
-      out_string += "\n"
-
-  if out_file is None:
-    out_file = f"./README.md"
-  if out_file.endswith("/") or out_file.endswith("\\"):
-    out_file += "README.md"
-  elif not out_file.endswith(".md"):
-    out_file += ".md"
-    
-  if '/' in out_file or '\\' in out_file:
-    os.makedirs(os.path.dirname(out_file), exist_ok=True)
-   
-  with open(f"{out_file}", "w") as out:
-    out.write(out_string)
-  print(f"Output written to {out_file}")
-
-
+  room = room_task(thm_session, room_name, skip_answers)
+  room.write_room(out_file)
 
 if __name__ == "__main__":
   room = None
