@@ -9,70 +9,7 @@ class room_task:
     self.thm_session  = thm_session
     self.room_name    = room_name
     self.skip_answers = skip_answers
-    
-    self.get_room_tasks()
-  
-  def get_room_tasks(self) -> None:
-    self.room_tasks = self.thm_session.room_tasks(self.room_name)
-    
-    if self.room_tasks.__len__() < 1:
-      print(f"Room {self.room_name} doesn't exsist or is empty.")
-      exit()
-    
-    if self.authenticated:
-      for i in self.room_tasks:
-        i['questions'] = i['tasksInfo']
-        del i['tasksInfo']
-
-    # * Cleaning HTML from elements
-    for task in self.room_tasks:
-      for question in task['questions']:
-        if "question"   in question: question["question"]   = self.de_HTML(question["question"])
-        if "answerDesc" in question: question["answerDesc"] = self.de_HTML(question["answerDesc"])
-        if "submission" in question: question["submission"] = self.de_HTML(question["submission"])
-        if "hint"       in question: question["hint"]       = self.de_HTML(question["hint"])
-      
-      if "taskTitle"  in task: task["taskTitle"]  = self.de_HTML(task["taskTitle"])
-      if "taskDesc"   in task: task["taskDesc"]   = self.de_HTML(task["taskDesc"])
-      if "taskType"   in task: task["taskType"]   = self.de_HTML(task["taskType"])
-  
-  def de_HTML(self, input: str, replace: str='') -> str:
-    if input[-1:] == '\n': input = input[:-1]
-    for t in config.config['HTML_TAGS']:
-      input = re.sub(r"<"+ t +"[^<]*>", replace, input);
-    for t in config.config['REPLACE_TAGS']:
-      input = re.sub(t[0], t[1], input);
-    return input
-  
-  @property
-  def authenticated(self) -> bool:
-    return self.thm_session.authenticated
-  
-  @property
-  def tasks(self) -> list:
-    return self.room_tasks
-  
-  def get_task(self, taskNo: int = -1, index: int = -1) -> dict:
-    """
-    return a list with questions from a task
-    Parameters:
-      -taskNo: the taskNo from the task object
-      -index: task index
-    
-    """
-    # * cant get questions no valid search term used
-    if taskNo == -1 and index == -1: return None
-
-    if taskNo > 0:
-      task = [task for task in self.room_tasks if task['taskNo'] == taskNo]
-      # * No task found at taskNo
-      if task.__len__() < 1: return None
-      return task[0]
-    
-    # * index
-    else:
-      return self.room_tasks[index]
-  
+ 
   def get_attr(self, task: dict=None, question: dict=None) -> dict:
     attr = {
       "room_name":       self.room_name
