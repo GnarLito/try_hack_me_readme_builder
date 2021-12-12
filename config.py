@@ -6,48 +6,13 @@ template = {
 """,
 
   "task": """
-## {taskNo}. {taskTitle}{questions}
+## {task_number}. {task_title}
+{questions}
 """,
 
-  "question": """
-  {questionNo}. **{question}**
-  > `{submission} `
+  "question": """  {question_number}. **{question_question}**
+  > `{question_submission} `
 """,
-  "no_answer": "{answerDesc}",
-  "placeholder": "{answerDesc}",
-}
-
-config = {
-  "REPLACE_TAGS": [
-    ['&amp;', ''],
-    ['&lt;', '<'],
-    ['&gt;', '>'],
-    ['<code>', '`'],
-    ['</code>', '`'],
-    ['\n`', '`']
-  ],
-  "HTML_TAGS": [
-    'span'      , '/span'
-    , 'p'       , '/p'
-    , 'a'       , '/a'
-    , 'em'      , '/em'
-    , 'b'       , '/b'
-    , 'strong'  , '/strong'
-    , 'div'     , '/div'
-    , 'tbody'   , '/tbody'
-    , 'thead'   , '/thead'
-    , 'table'   , '/table'
-    , 'td'      , '/td'
-    , 'th'      , '/th'
-    , 'tr'      , '/tr'
-    , 'br'      , 'img'
-  ],
-  "auth_only": [
-    "submission"
-    , "correct"
-    , "extraPoints"
-    , "attempts"
-    , "noAnswer"
-    , "answerDesc"
-  ]
+  "no_answer": "{question_description}",
+  "placeholder": "{question_description}",
 }
