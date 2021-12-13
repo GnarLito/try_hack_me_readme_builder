@@ -65,9 +65,9 @@ def main(room_name, out_file=None, session=None, skip_answers=False):
       question_attr = get_attr(thm, room, question=question)
       question_attr.update(task_attrs)
       if not question.has_answer and question.correct:
-        question.submission = replace_attr(config.template['no_answer'], r"{(.*?)}", question_attr)
+        question_attr["question_submission"] = replace_attr(config.template['no_answer'], r"{(.*?)}", question_attr)
       elif not question.correct:
-        question.submission = replace_attr(config.template['placeholder'], r"{(.*?)}", question_attr)
+        question_attr["question_submission"] = replace_attr(config.template['placeholder'], r"{(.*?)}", question_attr)
     
       if skip_answers:
         questions_string += replace_attr(config.template["question"].replace("{question_submission}", ""), r"{(.*?)}", question_attr)
